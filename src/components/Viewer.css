@@ -51,7 +51,11 @@
   font-size: 18px;
 }
 
-.Viewer .content_section code {
+/* .Viewer .content_section code {
   background-color: rgb(245, 245, 245);
   padding: 10px;
+} */
+
+.Viewer .content_section img {
+  max-width: 100%;
 }

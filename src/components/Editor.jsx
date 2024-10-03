@@ -25,7 +25,7 @@ const Editor = ({ id }) => {
       console.log("포스트 수정");
       // API 호출해서 기존 포스트 내용으로 채워줘야 함
       callApi(
-        `${import.meta.env.VITE_API_URL}/${id}`,
+        `${import.meta.env.VITE_API_URL}/posts/${id}`,
         "GET",
         null,
         (respJson) => {
