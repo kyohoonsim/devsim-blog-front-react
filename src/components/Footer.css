@@ -1,0 +1,12 @@
+.Footer {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-top: 1px solid rgb(245, 245, 245);
+}
+
+.Footer .footer_btn_wrapper {
+  display: flex;
+  gap: 10px;
+}

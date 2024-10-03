@@ -1,0 +1,55 @@
+.PostList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0px;
+}
+
+.PostList .post_cnt {
+  text-align: center;
+  font-size: 24px;
+}
+
+.PostList .post_list_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.PostList .post_list_section .post_card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: rgb(245, 245, 245);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.PostList .post_list_section .post_card h4 {
+  margin: 0;
+  font-size: 18px;
+  color: rgb(24, 76, 136);
+}
+
+.PostList .post_list_section .post_card h4 a {
+  text-decoration: none;
+  color: rgb(24, 76, 136);
+}
+
+.PostList .post_list_section .post_card .post_time {
+  font-size: 12px;
+  color: rgb(50, 50, 50);
+}
+
+.PostList .post_list_section .post_card .post_tag_list_wrapper {
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.PostList .post_list_section .post_card .post_tag_list_wrapper span {
+  border: 1px solid rgb(24, 76, 136);
+  color: rgb(24, 76, 136);
+  padding: 5px;
+  border-radius: 5px;
+}

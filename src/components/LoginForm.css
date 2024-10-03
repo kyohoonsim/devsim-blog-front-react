@@ -1,0 +1,12 @@
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  padding: 100px 0px;
+  margin: 0px auto;
+}
+
+.LoginForm h2 {
+  font-size: 30px;
+}

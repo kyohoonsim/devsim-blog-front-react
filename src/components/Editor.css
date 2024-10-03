@@ -1,0 +1,49 @@
+.Editor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.Editor .title_section {
+  display: flex;
+  flex-direction: column;
+}
+
+.Editor .title_section h2 {
+  font-size: 24px;
+  color: rgb(24, 76, 136);
+}
+
+.Editor .content_section h2 {
+  font-size: 24px;
+  color: rgb(24, 76, 136);
+}
+
+.Editor .tag_section {
+  display: flex;
+  flex-direction: column;
+}
+
+.Editor .tag_section .tag_list_wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.Editor .tag_section h2 {
+  font-size: 24px;
+  color: rgb(24, 76, 136);
+}
+
+.Editor .control_section {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+/* .Editor .control_section select {
+  border: none;
+  padding: 10px 20px;
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+} */

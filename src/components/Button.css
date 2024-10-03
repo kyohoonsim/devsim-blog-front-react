@@ -1,0 +1,34 @@
+.Button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.Button_PRIMARY {
+  background-color: rgb(24, 76, 136); /* 클래식블루 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.Button_PRIMARY:hover {
+  background-color: rgb(44, 96, 156);
+}
+
+.Button_SECONDARY {
+  background-color: rgb(245, 245, 245);
+  color: black;
+  border: none;
+  border-radius: 5px;
+}
+
+.Button_SECONDARY:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.Button_LINK {
+  display: inline;
+  background-color: white;
+  color: rgb(44, 96, 156);
+  border: none;
+  padding: 0;
+}

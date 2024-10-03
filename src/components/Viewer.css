@@ -1,0 +1,57 @@
+.Viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0px;
+  min-height: 500px;
+}
+
+.Viewer .title_section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+  /* border-bottom: 3px solid rgb(24, 76, 136); */
+}
+
+.Viewer .title_section h2 {
+  font-size: 32px;
+  color: rgb(24, 76, 136);
+  margin: 0px;
+}
+
+.Viewer .title_section .time_wrapper {
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: rgb(50, 50, 50);
+}
+
+.Viewer .title_section .control_wrapper {
+  /* text-align: left; */
+  display: flex;
+  gap: 10px;
+}
+
+.Viewer .title_section .tag_list_wrapper {
+  font-size: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.Viewer .title_section .tag_list_wrapper span {
+  border: 1px solid rgb(24, 76, 136);
+  color: rgb(24, 76, 136);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.Viewer .content_section {
+  font-size: 18px;
+}
+
+.Viewer .content_section code {
+  background-color: rgb(245, 245, 245);
+  padding: 10px;
+}
