@@ -6,25 +6,42 @@ import { callApi } from "../util/tran";
 
 const PostList = () => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isEnableBtn, setIsEnableBtn] = useState(true);
+  const [keyword, setKeyword] = useState(null);
 
   useEffect(() => {
+    console.log("Page: " + page);
     // API 호출하여 글 목록 가져오기
     callApi(
-      `${import.meta.env.VITE_API_URL}/posts?page=1&postPerPage=20`,
+      `${import.meta.env.VITE_API_URL}/posts?page=${page}&postPerPage=10`,
       "GET",
       null,
       (respJson) => {
-        setData(respJson);
+        console.log(respJson);
+        // 기존 data 배열과 응답 받은 배열 합치기 (2024-10-08 개발중)
+        if (respJson.length) {
+          const tempData = data.concat(respJson);
+          setData(tempData);
+        } else {
+          window.alert("가져올 포스트 목록이 없습니다.");
+          setIsEnableBtn(false);
+        }
       },
       (errMsg) => {
         window.alert(errMsg);
       }
     );
-  }, []);
+  }, [page]);
+
+  const onClickMoreBtn = () => {
+    setPage((page) => page + 1); // setState 함수형 업데이트 필요
+  };
 
   return (
     <div className="PostList">
-      <h2 className="post_cnt">총 N개의 글이 있습니다.</h2>
+      {keyword ? <h2 className="post_cnt">검색어: {keyword}</h2> : ""}
+
       <section className="post_list_section">
         {data.map((item) => (
           <div key={item.idx} className="post_card">
@@ -59,7 +76,11 @@ const PostList = () => {
           </div>
         ))}
       </section>
-      <Button text={"더보기"} type={"PRIMARY"} />
+      {isEnableBtn ? (
+        <Button text={"더보기"} type={"PRIMARY"} onClick={onClickMoreBtn} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

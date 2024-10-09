@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { LoginStateContext } from "../App";
 import { callApi } from "../util/tran";
+import Giscus from "@giscus/react";
 
 const Viewer = () => {
   const params = useParams();
@@ -134,6 +135,7 @@ const Viewer = () => {
           }}
         />
       </section>
+      <Giscus />
     </div>
   );
 };

@@ -13,7 +13,19 @@ Currently, two official plugins are available:
 - npm i
 - npm run dev
 - 불필요한 코드 및 파일 삭제
+
+## 패키지 설치
+
 - npm i react-router-dom
 - npm i react-simplemde-editor easymde
 - npm install react-markdown
 - npm install react-syntax-highlighter
+- npm i @giscus/react
+
+## 빌드
+
+- npm run build
+
+## 배포
+
+- dist 폴더 내 내용물을 s3 버킷에 넣는다.

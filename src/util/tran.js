@@ -29,8 +29,8 @@ export const callApi = (url, method, data, callback, errorCallback) => {
       return response.json(); // JSON 데이터로 변환
     })
     .then((respJson) => {
-      console.log("===== API 응답 JSON =====");
-      console.log(JSON.stringify(respJson));
+      // console.log("===== API 응답 JSON =====");
+      // console.log(JSON.stringify(respJson));
       callback(respJson);
     })
     .catch((err) => {
