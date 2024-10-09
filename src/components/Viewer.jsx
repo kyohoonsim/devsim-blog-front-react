@@ -135,7 +135,20 @@ const Viewer = () => {
           }}
         />
       </section>
-      <Giscus />
+      <Giscus
+        id="comments"
+        repo="kyohoonsim/devsim-blog-front-react"
+        repoId="R_kgDOM66EYA"
+        category="Announcements"
+        categoryId="DIC_kwDOM66EYM4CjM3I"
+        mapping="pathname"
+        term="Welcome to @giscus/react component!"
+        reactionsEnabled="1"
+        emitMetadata="0"
+        inputPosition="bottom"
+        theme="light"
+        lang="ko"
+      />
     </div>
   );
 };
