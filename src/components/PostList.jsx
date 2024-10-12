@@ -11,10 +11,9 @@ const PostList = () => {
   const [keyword, setKeyword] = useState(null);
 
   useEffect(() => {
-    console.log("Page: " + page);
     // API 호출하여 글 목록 가져오기
     callApi(
-      `${import.meta.env.VITE_API_URL}/posts?page=${page}&postPerPage=10`,
+      `${import.meta.env.VITE_API_URL}/posts?page=${page}&postPerPage=8`,
       "GET",
       null,
       (respJson) => {
