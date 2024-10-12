@@ -5,8 +5,8 @@ import Footer from "../components/Footer";
 const Post = () => {
   return (
     <div>
-      <Header searchBarYn={true}></Header>
-      <Viewer></Viewer>
+      <Header searchBarYn={true} headerBottomYn={true} />
+      <Viewer />
       <Footer />
     </div>
   );

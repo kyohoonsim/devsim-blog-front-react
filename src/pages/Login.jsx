@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 const Login = () => {
   return (
     <div>
-      <Header searchBarYn={true} />
+      <Header searchBarYn={true} headerBottomYn={true} />
       <LoginForm />
     </div>
   );

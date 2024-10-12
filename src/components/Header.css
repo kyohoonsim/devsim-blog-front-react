@@ -1,22 +1,37 @@
 .Header {
+}
+
+.Header .Header_top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgb(226, 226, 226);
 }
 
-.Header_title {
+.Header .Header_top .Header_title {
   font-size: 20px;
   font-weight: 900;
 }
 
-.Header_title a {
+.Header .Header_top .Header_title a {
   color: black;
   text-decoration: none;
 }
 
-.Header_search > input {
+.Header .Header_top .Header_search > input {
   border: none;
   padding: 5px 0px;
   border-bottom: 1px solid rgb(100, 100, 100);
+}
+
+.Header .Header_bottom {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 10px 0 20px 0;
+}
+
+.Header .Header_bottom .header_btn_wrapper {
+  display: flex;
+  gap: 10px;
 }

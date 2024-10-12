@@ -8,6 +8,7 @@ const Edit = () => {
     <div>
       <Header searchBarYn={false} />
       <Editor id={params.id} />
+      <Footer />
     </div>
   );
 };
