@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Editor from "../components/Editor";
+import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
 
 const Edit = () => {
