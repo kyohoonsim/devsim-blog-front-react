@@ -1,0 +1,21 @@
+.Toast {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: "opacity 0.5s ease";
+}
+
+.Toast_VISIBLE {
+  visibility: visible;
+  opacity: 1;
+}
+
+.Toast_HIDDEN {
+  visibility: hidden;
+  opacity: 0;
+}

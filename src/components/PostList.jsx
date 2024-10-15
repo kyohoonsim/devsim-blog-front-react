@@ -1,14 +1,30 @@
 import "./PostList.css";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import Toast from "./Toast";
 import { useEffect, useState } from "react";
 import { callApi } from "../util/tran";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const PostList = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [isEnableBtn, setIsEnableBtn] = useState(true);
   const [keyword, setKeyword] = useState(null);
+
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setToastVisible(true);
+
+    // 일정 시간이 지나면 toast를 자동으로 숨김
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     // API 호출하여 글 목록 가져오기
@@ -23,7 +39,8 @@ const PostList = () => {
           const tempData = data.concat(respJson);
           setData(tempData);
         } else {
-          window.alert("가져올 포스트 목록이 없습니다.");
+          // toast("가져올 포스트 목록이 없습니다.");
+          showToast("가져올 포스트 목록이 없습니다.");
           setIsEnableBtn(false);
         }
       },
@@ -80,6 +97,20 @@ const PostList = () => {
       ) : (
         ""
       )}
+      <Toast
+        message={toastMessage}
+        visible={toastVisible}
+        onclose={() => setToastVisible(false)}
+      />
+
+      {/* <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      /> */}
     </div>
   );
 };
