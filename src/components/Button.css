@@ -4,31 +4,31 @@
 }
 
 .Button_PRIMARY {
-  background-color: rgb(24, 76, 136); /* 클래식블루 */
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
 }
 
 .Button_PRIMARY:hover {
-  background-color: rgb(44, 96, 156);
+  background-color: var(--primary-color);
 }
 
 .Button_SECONDARY {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--lightgray-color);
   color: black;
   border: none;
   border-radius: 5px;
 }
 
 .Button_SECONDARY:hover {
-  background-color: rgb(225, 225, 225);
+  background-color: var(--lightgray-color);
 }
 
 .Button_LINK {
   display: inline;
   background-color: white;
-  color: rgb(44, 96, 156);
+  color: var(--primary-color);
   border: none;
   padding: 0;
 }

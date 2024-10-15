@@ -3,7 +3,7 @@
 
 .Header .Header_top {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   border-bottom: 1px solid rgb(226, 226, 226);
 }

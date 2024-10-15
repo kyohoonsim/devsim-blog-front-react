@@ -12,12 +12,12 @@
 
 .Editor .title_section h2 {
   font-size: 24px;
-  color: rgb(24, 76, 136);
+  color: var(--text-color);
 }
 
 .Editor .content_section h2 {
   font-size: 24px;
-  color: rgb(24, 76, 136);
+  color: var(--text-color);
 }
 
 .Editor .tag_section {
@@ -32,7 +32,7 @@
 
 .Editor .tag_section h2 {
   font-size: 24px;
-  color: rgb(24, 76, 136);
+  color: var(--text-color);
 }
 
 .Editor .control_section {

@@ -16,3 +16,10 @@ body {
   box-shadow: rgba(100, 100, 100, 0.2) 0px 0px 29px 0px;
   padding: 0px 20px;
 }
+
+:root {
+  --primary-color: #21ba6e;
+  --secondary-color: #a269cf; /*rgb(44, 96, 156);*/
+  --lightgray-color: rgb(245, 245, 245);
+  --text-color: #333;
+}
