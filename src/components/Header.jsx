@@ -6,6 +6,7 @@ import { LoginStateContext, LoginDispatchContext } from "../App";
 
 const Header = ({ searchBarYn, headerBottomYn }) => {
   const isLogin = useContext(LoginStateContext);
+  console.log("Header 컴포넌트 isLogin: " + isLogin);
   const { onClickLoginBtn, onClickLogoutBtn, onClickNewBtn } =
     useContext(LoginDispatchContext);
 
@@ -13,7 +14,9 @@ const Header = ({ searchBarYn, headerBottomYn }) => {
     <header className="Header">
       <div className="Header_top">
         <h1 className="Header_title">
-          <Link to="/">devsim</Link>
+          <Link to="/">
+            <img src="/thumbnail.png" width="150" />
+          </Link>
         </h1>
         <div className="Header_search">
           {searchBarYn === true ? (
