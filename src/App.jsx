@@ -33,11 +33,9 @@ function App() {
   const onClickLogoutBtn = () => {
     console.log("로그아웃 버튼 클릭");
     // 로그아웃 API 요청
-
     localStorage.removeItem("token");
-    localStorage.removeItem("idx");
-    localStorage.removeItem("username");
-
+    setUsername("방문자");
+    setRole(null);
     nav("/", { replace: true });
   };
   const onClickNewBtn = () => {
@@ -49,7 +47,6 @@ function App() {
   };
   const onKeyDownKeyword = (e) => {
     if (e.key === "Enter") {
-      console.log("엔터키 입력");
       setPage(1);
       setSearchKeyword(keyword.replaceAll(/\s/g, ";"));
       setData([]);
@@ -75,16 +72,8 @@ function App() {
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwtDecode(token);
-      console.log(decoded);
-
       // 토큰 만료시간 체크
       const currentTime = Date.now() / 1000;
-      console.log(
-        "decoded.exp, currentTime >> ",
-        decoded.exp,
-        ", ",
-        currentTime
-      );
       if (decoded.exp < currentTime) {
         console.log("Token expired!");
         localStorage.removeItem("token");
