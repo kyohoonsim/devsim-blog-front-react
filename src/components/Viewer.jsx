@@ -5,15 +5,16 @@ import { useState, useEffect, useContext } from "react";
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { LoginStateContext } from "../App";
+import { StateContext } from "../App";
 import { callApi } from "../util/tran";
 import Giscus from "@giscus/react";
+import { Helmet } from "react-helmet-async";
 
 const Viewer = () => {
   const params = useParams();
   const nav = useNavigate();
-  const isLogin = useContext(LoginStateContext);
-  console.log("Viewer 컴포넌트에서 isLogin: ", isLogin);
+  const sc = useContext(StateContext);
+  console.log("Viewer 컴포넌트에서 isLogin: ", sc.isLogin);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -87,69 +88,76 @@ const Viewer = () => {
   };
 
   return (
-    <div className="Viewer">
-      <section className="title_section">
-        <h2>{title}</h2>
+    <>
+      <Helmet>
+        <title>{title} - simVault</title>
+        <meta property="og:title" content={`${title} - simVault`} />
+        <meta property="og:description" content={`${title} - simVault`} />
+      </Helmet>
+      <div className="Viewer">
+        <section className="title_section">
+          <h2>{title}</h2>
 
-        <div className="time_wrapper">
-          <span>{createdAt}</span>
-          <span>{updatedAt}</span>
-        </div>
-
-        {isLogin ? (
-          <div className="control_wrapper">
-            <Button text={"수정"} type={"LINK"} onClick={onClickEditBtn} />
-            <Button text={"삭제"} type={"LINK"} onClick={onClickDeleteBtn} />
+          <div className="time_wrapper">
+            <span>{createdAt}</span>
+            <span>{updatedAt}</span>
           </div>
-        ) : (
-          ""
-        )}
 
-        <div className="tag_list_wrapper">
-          {tag1 ? <span>{tag1}</span> : ""}
-          {tag2 ? <span>{tag2}</span> : ""}
-          {tag3 ? <span>{tag3}</span> : ""}
-        </div>
-      </section>
-      <section className="content_section">
-        <Markdown
-          children={content}
-          components={{
-            code(props) {
-              const { children, className, node, ...rest } = props;
-              const match = /language-(\w+)/.exec(className || "");
-              return match ? (
-                <SyntaxHighlighter
-                  {...rest}
-                  PreTag="div"
-                  children={String(children).replace(/\n$/, "")}
-                  language={match[1]}
-                  style={dark}
-                />
-              ) : (
-                <code {...rest} className={className}>
-                  {children}
-                </code>
-              );
-            },
-          }}
+          {sc.role === "ADMIN" ? (
+            <div className="control_wrapper">
+              <Button text={"수정"} type={"LINK"} onClick={onClickEditBtn} />
+              <Button text={"삭제"} type={"LINK"} onClick={onClickDeleteBtn} />
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div className="tag_list_wrapper">
+            {tag1 ? <span>{tag1}</span> : ""}
+            {tag2 ? <span>{tag2}</span> : ""}
+            {tag3 ? <span>{tag3}</span> : ""}
+          </div>
+        </section>
+        <section className="content_section">
+          <Markdown
+            children={content}
+            components={{
+              code(props) {
+                const { children, className, node, ...rest } = props;
+                const match = /language-(\w+)/.exec(className || "");
+                return match ? (
+                  <SyntaxHighlighter
+                    {...rest}
+                    PreTag="div"
+                    children={String(children).replace(/\n$/, "")}
+                    language={match[1]}
+                    style={dark}
+                  />
+                ) : (
+                  <code {...rest} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          />
+        </section>
+        <Giscus
+          id="comments"
+          repo="kyohoonsim/devsim-blog-front-react"
+          repoId="R_kgDOM66EYA"
+          category="Announcements"
+          categoryId="DIC_kwDOM66EYM4CjM3I"
+          mapping="pathname"
+          term="Welcome to @giscus/react component!"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="bottom"
+          theme="light"
+          lang="ko"
         />
-      </section>
-      <Giscus
-        id="comments"
-        repo="kyohoonsim/devsim-blog-front-react"
-        repoId="R_kgDOM66EYA"
-        category="Announcements"
-        categoryId="DIC_kwDOM66EYM4CjM3I"
-        mapping="pathname"
-        term="Welcome to @giscus/react component!"
-        reactionsEnabled="1"
-        emitMetadata="0"
-        inputPosition="bottom"
-        theme="light"
-        lang="ko"
-      />
-    </div>
+      </div>
+    </>
   );
 };
 
