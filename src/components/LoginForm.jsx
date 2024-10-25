@@ -25,8 +25,6 @@ const LoginForm = () => {
       (respJson) => {
         window.alert("로그인 성공");
         localStorage.setItem("token", respJson.token);
-        localStorage.setItem("username", respJson.username);
-        localStorage.setItem("idx", respJson.idx);
         nav("/", { replace: true });
       },
       (errMsg) => {
