@@ -6,13 +6,25 @@ import New from "./pages/New";
 import Edit from "./pages/Edit";
 import Post from "./pages/Post";
 import Login from "./pages/Login";
+import { callApi } from "./util/tran";
+import { HelmetProvider } from "react-helmet-async";
+import { jwtDecode } from "jwt-decode";
 
-export const LoginStateContext = createContext();
-export const LoginDispatchContext = createContext();
+export const StateContext = createContext();
+export const DispatchContext = createContext();
 
 function App() {
   const nav = useNavigate();
-  const [isLogin, setIsLogin] = useState(false); // 이거 최상위 부모로 옮긴 후 내려받아서 사용하는 것으로 수정하자!!
+  const [username, setUsername] = useState("방문자");
+  const [role, setRole] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [isEnableBtn, setIsEnableBtn] = useState(true);
 
   const onClickLoginBtn = () => {
     console.log("로그인 버튼 클릭");
@@ -32,33 +44,122 @@ function App() {
     console.log("새글작성 버튼 클릭");
     nav("/new");
   };
+  const onChangeKeyword = (e) => {
+    setKeyword(() => e.target.value);
+  };
+  const onKeyDownKeyword = (e) => {
+    if (e.key === "Enter") {
+      console.log("엔터키 입력");
+      setPage(1);
+      setSearchKeyword(keyword.replaceAll(/\s/g, ";"));
+      setData([]);
+      nav("/", { replace: true });
+    }
+  };
+
+  const onClickMoreBtn = () => {
+    setPage(page + 1); // setState 함수형 업데이트 필요
+  };
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setToastVisible(true);
+
+    // 일정 시간이 지나면 toast를 자동으로 숨김
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
-    const idx = localStorage.getItem("idx");
-    if (idx) {
-      setIsLogin(true);
-      console.log("isLogin: ", isLogin);
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+
+      // 토큰 만료시간 체크
+      const currentTime = Date.now() / 1000;
+      console.log(
+        "decoded.exp, currentTime >> ",
+        decoded.exp,
+        ", ",
+        currentTime
+      );
+      if (decoded.exp < currentTime) {
+        console.log("Token expired!");
+        localStorage.removeItem("token");
+      } else {
+        setUsername(decoded?.username); // username state 세팅
+        setRole(decoded?.role); // role state 세팅
+        setIsLogin(true);
+      }
     } else {
       setIsLogin(false);
-      console.log("isLogin: ", isLogin);
     }
   });
 
+  useEffect(() => {
+    // API 호출하여 글 목록 가져오기
+    callApi(
+      `${
+        import.meta.env.VITE_API_URL
+      }/posts?page=${page}&postPerPage=6&keywords=${searchKeyword}`,
+      "GET",
+      null,
+      (respJson) => {
+        console.log(respJson);
+        // 기존 data 배열과 응답 받은 배열 합치기
+        if (respJson.length) {
+          const tempData = data.concat(respJson);
+          setData(tempData);
+          setIsEnableBtn(true);
+        } else {
+          showToast("가져올 포스트 목록이 없습니다.");
+          setIsEnableBtn(false);
+        }
+      },
+      (errMsg) => {
+        window.alert(errMsg);
+      }
+    );
+  }, [page, searchKeyword]);
+
   return (
     <>
-      <LoginStateContext.Provider value={isLogin}>
-        <LoginDispatchContext.Provider
-          value={{ onClickLoginBtn, onClickLogoutBtn, onClickNewBtn }}
+      <HelmetProvider>
+        <StateContext.Provider
+          value={{
+            isLogin,
+            keyword,
+            data,
+            page,
+            toastVisible,
+            toastMessage,
+            isEnableBtn,
+            username,
+            role,
+          }}
         >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/new" element={<New />} />
-            <Route path="/edit/:id" element={<Edit />} />
-            <Route path="/post/:id" element={<Post />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </LoginDispatchContext.Provider>
-      </LoginStateContext.Provider>
+          <DispatchContext.Provider
+            value={{
+              onClickLoginBtn,
+              onClickLogoutBtn,
+              onClickNewBtn,
+              onChangeKeyword,
+              onClickMoreBtn,
+              onKeyDownKeyword,
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/edit/:id" element={<Edit />} />
+              <Route path="/post/:id" element={<Post />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </DispatchContext.Provider>
+        </StateContext.Provider>
+      </HelmetProvider>
     </>
   );
 }

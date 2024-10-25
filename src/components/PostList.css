@@ -36,6 +36,11 @@
   color: var(--text-color);
 }
 
+.PostList .post_list_section .post_card .post_views {
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
 .PostList .post_list_section .post_card .post_time {
   font-size: 12px;
   color: var(--text-color);
