@@ -1,3 +1,10 @@
 .Footer {
+  display: flex;
+  flex-direction: column;
   margin: 20px 0;
+  gap: 10px;
+}
+
+.Footer_bottom {
+  font-style: italic;
 }
