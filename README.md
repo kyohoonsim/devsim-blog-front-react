@@ -21,6 +21,8 @@ Currently, two official plugins are available:
 - npm install react-markdown
 - npm install react-syntax-highlighter
 - npm i @giscus/react
+- npm i react-helmet-async
+- npm i jwt-decode
 
 ## 빌드
 
