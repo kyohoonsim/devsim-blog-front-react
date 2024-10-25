@@ -16,7 +16,6 @@ const LoginForm = () => {
       username,
       pwd,
     };
-    console.log(data);
 
     callApi(
       `${import.meta.env.VITE_API_URL}/user/login`,
