@@ -1,9 +1,23 @@
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("./fonts/NotoSansKR-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("./fonts/NotoSansKR-SemiBold.ttf") format("truetype");
+  font-weight: bold;
+}
+
 html,
 body {
   margin: 0px;
   width: 100%;
   background-color: rgb(246, 246, 246);
   display: flex;
+  font-family: "NotoSansKR", sans-serif;
+  word-break: break-all; /* 링크가 영역 밖으로 넘어가지 않도록 */
 }
 
 #root {
