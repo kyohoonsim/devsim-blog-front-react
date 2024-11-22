@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import Toast from "./Toast";
 import { useEffect, useState, useContext } from "react";
-import { callApi } from "../util/tran";
 import { StateContext, DispatchContext } from "../App";
 
 const PostList = () => {

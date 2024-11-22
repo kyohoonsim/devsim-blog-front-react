@@ -1,0 +1,30 @@
+.MyPortal {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+  padding: 20px 0px;
+}
+
+.MyPortal .portal_item_wrapper {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.MyPortal .MyPortal_public h4,
+.MyPortal .MyPortal_private h4 {
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.MyPortal .portal_item_wrapper .portal_item {
+  width: 150px;
+  background-color: var(--lightgray-color);
+  padding: 10px;
+}
+
+.MyPortal .portal_item_wrapper .portal_item a {
+  text-decoration: none;
+  color: var(--primary-color);
+}

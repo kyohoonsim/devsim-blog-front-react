@@ -27,7 +27,7 @@
 
 .Button_LINK {
   display: inline;
-  background-color: white;
+  background-color: transparent;
   color: var(--primary-color);
   border: none;
   padding: 0;

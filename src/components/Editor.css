@@ -20,6 +20,11 @@
   color: var(--text-color);
 }
 
+.Editor .img_section h2 {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
 .Editor .tag_section {
   display: flex;
   flex-direction: column;

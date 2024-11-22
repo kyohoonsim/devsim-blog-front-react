@@ -6,6 +6,7 @@ import New from "./pages/New";
 import Edit from "./pages/Edit";
 import Post from "./pages/Post";
 import Login from "./pages/Login";
+import Portal from "./pages/Portal";
 import { callApi } from "./util/tran";
 import { HelmetProvider } from "react-helmet-async";
 import { jwtDecode } from "jwt-decode";
@@ -15,7 +16,7 @@ export const DispatchContext = createContext();
 
 function App() {
   const nav = useNavigate();
-  const [username, setUsername] = useState("방문자");
+  const [username, setUsername] = useState("Guest");
   const [role, setRole] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -33,8 +34,9 @@ function App() {
   const onClickLogoutBtn = () => {
     console.log("로그아웃 버튼 클릭");
     // 로그아웃 API 요청
-    localStorage.removeItem("token");
-    setUsername("방문자");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    setUsername("Guest");
     setRole(null);
     nav("/", { replace: true });
   };
@@ -69,19 +71,25 @@ function App() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("access_token");
     if (token) {
       const decoded = jwtDecode(token);
+
+      setUsername(decoded?.username); // username state 세팅
+      setRole(decoded?.role); // role state 세팅
+      setIsLogin(true);
+
       // 토큰 만료시간 체크
-      const currentTime = Date.now() / 1000;
-      if (decoded.exp < currentTime) {
-        console.log("Token expired!");
-        localStorage.removeItem("token");
-      } else {
-        setUsername(decoded?.username); // username state 세팅
-        setRole(decoded?.role); // role state 세팅
-        setIsLogin(true);
-      }
+      // const currentTime = Date.now() / 1000;
+      // if (decoded.exp < currentTime) {
+      //   console.log("Token expired!");
+      //   localStorage.removeItem("access_token");
+      //   // 이때 refresh token 요청해서 만료되었다면 교체하는 것은? 너무 잦은 요청이 되려나?
+      // } else {
+      //   setUsername(decoded?.username); // username state 세팅
+      //   setRole(decoded?.role); // role state 세팅
+      //   setIsLogin(true);
+      // }
     } else {
       setIsLogin(false);
     }
@@ -145,6 +153,7 @@ function App() {
               <Route path="/edit/:id" element={<Edit />} />
               <Route path="/post/:id" element={<Post />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/portal" element={<Portal />} />
             </Routes>
           </DispatchContext.Provider>
         </StateContext.Provider>

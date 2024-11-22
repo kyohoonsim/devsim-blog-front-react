@@ -5,7 +5,9 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { callApi } from "../util/tran";
+import { callApi, callApiWithAuth } from "../util/tran";
+import { generateRandomString } from "../util/rand";
+import { getCurrentDateTimeStr } from "../util/dt";
 
 const Editor = ({ id }) => {
   const nav = useNavigate();
@@ -15,6 +17,8 @@ const Editor = ({ id }) => {
   const [idx, setIdx] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [img, setImg] = useState(null);
+  const [imgList, setImgList] = useState([]);
   const [tag1, setTag1] = useState("");
   const [tag2, setTag2] = useState("");
   const [tag3, setTag3] = useState("");
@@ -73,7 +77,7 @@ const Editor = ({ id }) => {
         tags: `${tag1};${tag2};${tag3}`,
       };
 
-      callApi(
+      callApiWithAuth(
         `${import.meta.env.VITE_API_URL}/posts/modify`,
         "POST",
         data,
@@ -93,7 +97,7 @@ const Editor = ({ id }) => {
         tags: `${tag1};${tag2};${tag3}`,
       };
 
-      callApi(
+      callApiWithAuth(
         `${import.meta.env.VITE_API_URL}/posts/new`,
         "POST",
         data,
@@ -126,6 +130,47 @@ const Editor = ({ id }) => {
     setTag3(e.target.value);
   };
 
+  const onChangeImg = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+    console.log(e.target.files[0].name);
+    setImg(e.target.files[0]);
+  };
+
+  const onClickImgUpload = () => {
+    const img_name =
+      // generateRandomString(10) + "_" + encodeURIComponent(img.name);
+      getCurrentDateTimeStr() + "-" + generateRandomString(10);
+    const data = {
+      file_name: img_name,
+    };
+
+    callApiWithAuth(
+      `${import.meta.env.VITE_API_URL}/posts/presigned-url`,
+      "POST",
+      data,
+      (respJson) => {
+        console.log(respJson.url);
+        fetch(respJson.url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: img,
+        }).then((response) => {
+          setImgList([
+            ...imgList,
+            `https://s3-devsim-blog.s3.ap-northeast-2.amazonaws.com/post-imgs/${img_name}`,
+          ]);
+        });
+      },
+      (errMsg) => {
+        window.alert(errMsg);
+      }
+    );
+  };
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -143,6 +188,17 @@ const Editor = ({ id }) => {
         <h2>내용</h2>
         {/* 참고: https://www.npmjs.com/package/react-simplemde-editor */}
         <SimpleMDE onChange={onChangeContent} value={content} />
+      </section>
+      <section className="img_section">
+        <h2>이미지</h2>
+        <p>이미지 저장소(S3)에 이미지를 업로드합니다.</p>
+        <input type="file" accept="image/*" onChange={onChangeImg} />
+        <Button text={"업로드"} type={"PRIMARY"} onClick={onClickImgUpload} />
+        <div className="img_list_wrapper">
+          {imgList.map((item, idx) => (
+            <p key={idx}>{item}</p>
+          ))}
+        </div>
       </section>
       <section className="tag_section">
         <h2>태그</h2>

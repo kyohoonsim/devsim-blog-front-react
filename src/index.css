@@ -13,11 +13,17 @@
 html,
 body {
   margin: 0px;
+  padding: 0px;
+  /* overflow-x: hidden; */
   width: 100%;
   background-color: rgb(246, 246, 246);
   display: flex;
   font-family: "NotoSansKR", sans-serif;
   word-break: break-all; /* 링크가 영역 밖으로 넘어가지 않도록 */
+}
+
+* {
+  box-sizing: border-box; /* box-sizing을 전역적으로 설정해 레이아웃 계산을 직관적으로 만듬.*/
 }
 
 #root {
@@ -36,4 +42,9 @@ body {
   --secondary-color: #a269cf; /*rgb(44, 96, 156);*/
   --lightgray-color: rgb(245, 245, 245);
   --text-color: #333;
+}
+
+/* 구글 애드센스 광고 패딩 */
+.mys-wrapper {
+  padding: 20px;
 }

@@ -23,7 +23,8 @@ const LoginForm = () => {
       data,
       (respJson) => {
         window.alert("로그인 성공");
-        localStorage.setItem("token", respJson.token);
+        localStorage.setItem("access_token", respJson.accessToken);
+        localStorage.setItem("refresh_token", respJson.refreshToken);
         nav("/", { replace: true });
       },
       (errMsg) => {
@@ -42,7 +43,7 @@ const LoginForm = () => {
 
   return (
     <div className="LoginForm">
-      <h2>작성자 로그인</h2>
+      <h2>로그인</h2>
       <Input
         name="id"
         type={"text"}

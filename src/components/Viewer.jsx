@@ -6,7 +6,7 @@ import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { StateContext } from "../App";
-import { callApi } from "../util/tran";
+import { callApi, callApiWithAuth } from "../util/tran";
 import Giscus from "@giscus/react";
 import { Helmet } from "react-helmet-async";
 
@@ -72,7 +72,7 @@ const Viewer = () => {
         idx: params.id,
       };
 
-      callApi(
+      callApiWithAuth(
         `${import.meta.env.VITE_API_URL}/posts/delete`,
         "POST",
         data,

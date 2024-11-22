@@ -1,40 +1,85 @@
-export const callApi = (url, method, data, callback, errorCallback) => {
-  let prom = "";
-
-  if (method.toUpperCase() === "POST") {
-    prom = fetch(url, {
+export const callApi = async (url, method, data, callback, errorCallback) => {
+  try {
+    let response = await fetch(url, {
       method: method,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+      body: method.toUpperCase() === "POST" ? JSON.stringify(data) : null,
+    });
+    let respJson = await response.json();
+    if (!response.ok) {
+      throw new Error(respJson.message);
+    }
+    callback(respJson);
+  } catch (error) {
+    errorCallback(error.message);
+  }
+};
+
+export const callApiWithAuth = async (
+  url,
+  method,
+  data,
+  callback,
+  errorCallback
+) => {
+  try {
+    let response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+      body: method.toUpperCase() === "POST" ? JSON.stringify(data) : null,
+    });
+    let respJson = await response.json();
+    if (response.status === 401) {
+      const refreshed = await getAccessToken();
+      if (refreshed) {
+        response = await fetch(url, {
+          method: method,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+          body: method.toUpperCase() === "POST" ? JSON.stringify(data) : null,
+        });
+        respJson = await response.json();
+      } else {
+        return;
+      }
+    }
+    callback(respJson);
+  } catch (error) {
+    errorCallback(error.message);
+  }
+};
+
+const getAccessToken = async () => {
+  console.log("access token 재발급 시도");
+  let data = {
+    refreshToken: localStorage.getItem("refresh_token"),
+  };
+  let response = await fetch(
+    `${import.meta.env.VITE_API_URL}/user/access-token`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
       },
       body: JSON.stringify(data),
-    });
-  } else if (method.toUpperCase() === "GET") {
-    prom = fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    }
+  );
+  let respJson = await response.json();
+  if (response.status === 401) {
+    window.alert(respJson.message);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    return false;
+  } else {
+    localStorage.setItem("access_token", respJson.accessToken);
+    return true;
   }
-  prom
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then((errorData) => {
-          throw new Error(errorData.message);
-        });
-      }
-      return response.json(); // JSON 데이터로 변환
-    })
-    .then((respJson) => {
-      // console.log("===== API 응답 JSON =====");
-      // console.log(JSON.stringify(respJson));
-      callback(respJson);
-    })
-    .catch((err) => {
-      console.log("===== API 에러 메시지 =====");
-      errorCallback(err.message);
-    });
 };

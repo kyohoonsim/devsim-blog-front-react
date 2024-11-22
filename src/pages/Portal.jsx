@@ -1,15 +1,15 @@
 import Header from "../components/Header";
-import PostList from "../components/PostList";
 import Footer from "../components/Footer";
+import MyPortal from "../components/MyPortal";
 
-const Home = () => {
+const Portal = () => {
   return (
     <div>
       <Header searchBarYn={true} />
-      <PostList />
+      <MyPortal />
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default Portal;
